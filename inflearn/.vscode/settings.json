@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "my_print_function.h": "c",
+        "stdio.h": "c",
+        "cstdio": "c",
+        "*.tcc": "c",
+        "stdlib.h": "c",
+        "cstdlib": "c"
+    }
+}
