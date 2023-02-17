@@ -93,7 +93,7 @@ struct book* read_books(const char* filename, int* n)
     }
 
     struct book* my_books = (struct book*)malloc(sizeof(struct book) * (*n));
-
+    
     if(!my_books){
         printf("Malloc() failed.\n");
         exit(EXIT_FAILURE);
