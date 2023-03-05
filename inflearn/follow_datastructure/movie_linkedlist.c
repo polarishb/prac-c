@@ -390,7 +390,7 @@ int main()
             insert_item(&head);
             break;
         case 6:
-            delete_all_items(&head);
+            delete_an_items(&head);
             break;
         case 7:
             delete_all_items(&head);
