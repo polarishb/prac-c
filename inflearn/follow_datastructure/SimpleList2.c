@@ -36,6 +36,38 @@ bool IsFull(const List* plist)
     return full;
 }
 
+unsigned int ReadFromFile(List* plist, const char* filename,  bool (*read_an_item_func)(FILE* file, Item* item))
+{
+    FILE* file = fopen(filename, "r");
+
+    if (file == NULL){
+        printf("ERROR: Cannot open file.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int num;
+    if (fscanf(file, "%d%*c", &num) != 1){
+        printf("ERROR: Wrong file format.");
+        exit(EXIT_FAILURE);
+    }
+    for (int n = 0; n < num; n++){
+        
+        Item new_item;
+        const bool flag = read_an_item_func(file, &new_item);
+
+        if(flag == false)
+        {
+            printf("ERROR: Wrong file format.");
+            exit(EXIT_FAILURE);
+        }
+        else
+            AddItem(new_item, plist);
+    }
+    fclose(file);
+
+    return num;
+}
+
 bool AppendItem(Item item, Node* prev)
 {
     Node* new_node;
@@ -180,13 +212,10 @@ unsigned int PrintAllItems(const List* plist, void (*print_an_item_func)(Item it
     Node* pnode = plist->head;
     unsigned int count = 0;
     while (pnode != NULL){
-        printf("%d : ", count);
         (*print_an_item_func)(pnode->item);
         pnode = pnode->next;
         count++;
     }
-
-    printf("\n");
 
     return count;
 }
@@ -242,4 +271,21 @@ bool FindItemByIndex(const List* plist, const int index, Item ** item){
         *item = &pnode->item;
         return true;
     }
+}
+
+unsigned int FindAndRun(const List* plist, Item item_to_find, bool (*compare_func)(Item a, Item b), void (*func_run)(Item item))
+{
+    Node* pnode = plist->head;
+
+    int count = 0;
+    while (pnode != NULL)
+    {
+        if ((*compare_func)(pnode->item, item_to_find) == true)
+            (*func_run)(pnode->item);
+
+        pnode = pnode->next;
+        count += 1;
+    }
+
+    return count;
 }
