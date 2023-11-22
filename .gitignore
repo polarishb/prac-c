@@ -1,7 +1,7 @@
 .vscode/
- old/
- /cscope.files
- /cscope.out
- /tags
- /test
- /test.c
+old/
+/cscope.files
+/prac-c/cscope.out
+/prac-c/tags
+/prac-c/test
+/prac-c/test.c
